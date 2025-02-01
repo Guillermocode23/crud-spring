@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fecha</title>
+    <link rel="stylesheet" href="css/date.css" />
+  </head>
+  <body>
+    <h1 title="choose a date">¿Cuándo celebramos San Valentín?</h1>
+    <form id="dateForm">
+      <label>Selecciona la fecha</label>
+      <div>
+        <input type="date" id="selectedDate" />
+        <button class="button" type="submit">Enviar</button>
+      </div>
+    </form>
+
+    <script>
+      document
+        .getElementById("dateForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+
+          const selectedDate = document.getElementById("selectedDate").value;
+
+          // Enviar la fecha al backend
+          fetch("http://localhost:8080/api/guardar-fecha", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(selectedDate),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Fecha guardada:", data);
+              alert("Fecha guardada correctamente");
+              window.location.href = "food.html";
+            
+            })
+            
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Error al guardar la fecha");
+            });
+        });
+    </script>
+  </body>
+</html>
