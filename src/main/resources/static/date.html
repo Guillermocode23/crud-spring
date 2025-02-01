@@ -25,21 +25,19 @@
           const selectedDate = document.getElementById("selectedDate").value;
 
           // Enviar la fecha al backend
-           fetch("https://teamomucho.up.railway.app/api/guardar-fecha"), {
+          fetch("https://teamomucho.up.railway.app/api/guardar-fecha", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(selectedDate),
+            body: JSON.stringify({ fecha: selectedDate }), // Envía la fecha como un objeto JSON
           })
             .then((response) => response.json())
             .then((data) => {
               console.log("Fecha guardada:", data);
               alert("Fecha guardada correctamente");
-              window.location.href = "food.html";
-            
+              window.location.href = "food.html"; // Redirige a la página "food.html"
             })
-            
             .catch((error) => {
               console.error("Error:", error);
               alert("Error al guardar la fecha");
