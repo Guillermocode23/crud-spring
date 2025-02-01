@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
 
-    @GetMapping("/inicio")
+    @GetMapping("/")
     public String home() {
         return "forward:/index.html"; // Sirve index.html sin redireccionar
     }
