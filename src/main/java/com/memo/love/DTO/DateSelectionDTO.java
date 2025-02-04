@@ -1,47 +1,48 @@
 package com.memo.love.DTO;
 
-
-import java.time.LocalDate;
-
 import com.memo.love.Models.DateSelection;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DateSelectionDTO {
 
-    private LocalDate selectedDate;
+    private String selectedDate; // Ahora almacenamos la fecha como String
 
     // Constructor vacío (necesario para frameworks como Spring)
     public DateSelectionDTO() {
     }
 
     // Constructor con parámetros
-    public DateSelectionDTO(LocalDate selectedDate) {
+    public DateSelectionDTO(String selectedDate) {
         this.selectedDate = selectedDate;
     }
 
     // Getters y Setters
-    public LocalDate getSelectedDate() {
+    public String getSelectedDate() {
         return selectedDate;
     }
 
-    public void setSelectedDate(LocalDate selectedDate) {
+    public void setSelectedDate(String selectedDate) {
         this.selectedDate = selectedDate;
+    }
+
+    // Método para convertir de entidad a DTO
+    public static DateSelectionDTO fromEntity(DateSelection dateSelection) {
+        return new DateSelectionDTO(dateSelection.getSelectedDate().toString());
+    }
+
+    // Método para convertir de DTO a entidad
+    public DateSelection toEntity() {
+        DateSelection dateSelection = new DateSelection();
+        dateSelection.setSelectedDate(LocalDate.parse(this.selectedDate, DateTimeFormatter.ISO_DATE));
+        return dateSelection;
     }
 
     // Método toString (opcional)
     @Override
     public String toString() {
         return "DateSelectionDTO{" +
-                "selectedDate=" + selectedDate +
+                "selectedDate='" + selectedDate + '\'' +
                 '}';
     }
-public static DateSelectionDTO fromEntity(DateSelection dateSelection) {
-    return new DateSelectionDTO(dateSelection.getSelectedDate());
-}
-
-public DateSelection toEntity() {
-    DateSelection dateSelection = new DateSelection();
-    dateSelection.setSelectedDate(this.selectedDate);
-    return dateSelection;
-}
-
 }

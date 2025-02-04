@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fecha</title>
+    <title>Date</title>
     <link rel="stylesheet" href="css/date.css" />
   </head>
   <body>
@@ -30,13 +30,12 @@
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ fecha: selectedDate }), // Envía la fecha como un objeto JSON
+            body: JSON.stringify(selectedDate),
           })
             .then((response) => response.json())
             .then((data) => {
               console.log("Fecha guardada:", data);
               alert("Fecha guardada correctamente");
-              window.location.href = "food.html"; // Redirige a la página "food.html"
             })
             .catch((error) => {
               console.error("Error:", error);
