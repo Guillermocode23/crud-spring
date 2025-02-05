@@ -9,39 +9,44 @@
   <body>
     <h1 title="choose a date">¿Cuándo celebramos San Valentín?</h1>
     <form id="dateForm">
-      <label>Selecciona la fecha</label>
+      <label for="selectedDate">Selecciona la fecha</label>
       <div>
-        <input type="date" id="selectedDate" />
+        <input type="date" id="selectedDate" required />
         <button class="button" type="submit">Enviar</button>
       </div>
     </form>
 
     <script>
-      document
-        .getElementById("dateForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+      document.getElementById("dateForm").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Evita el envío tradicional del formulario
 
-          const selectedDate = document.getElementById("selectedDate").value;
+        const selectedDate = document.getElementById("selectedDate").value;
 
-          // Enviar la fecha al backend
-          fetch("https://teamomucho.up.railway.app/api/guardar-fecha", {
+        if (!selectedDate) {
+          alert("Por favor, selecciona una fecha antes de enviar.");
+          return;
+        }
+
+        try {
+          const response = await fetch("/api/guardar-fecha", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(selectedDate),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Fecha guardada:", data);
-              alert("Fecha guardada correctamente");
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("Error al guardar la fecha");
-            });
-        });
+            body: JSON.stringify({ selectedDate }),
+          });
+
+          const data = await response.json();
+          console.log("Fecha guardada:", data);
+          alert(data.message || "Fecha guardada correctamente");
+          window.location.href = "food.html";
+       
+       
+        } catch (error) {
+          console.error( error);
+          alert(error);
+        }
+      });
     </script>
   </body>
 </html>

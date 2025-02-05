@@ -54,7 +54,7 @@
           }
 
           // Enviar las selecciones al backend
-          fetch("/api/guardar-postre", {
+          fetch("http://localhost:8080/api/guardar-postre", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

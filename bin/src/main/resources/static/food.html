@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Selection</title>
+    <link rel="stylesheet" href="css/food.css" />
+  </head>
+  <body>
+    <div id="foodquestion">
+      <b>¿Qué te gustaría comer, bonita?</b>
+    </div>
+
+    <div class="food-selection">
+      <div class="food-item">
+        <img src="food/burgers.jpeg" alt="Burgers, fries and fried chicken" />
+        <label
+          ><input
+            type="checkbox"
+            name="food"
+            value="Burgers, fries and fried chicken"
+          />
+          Hamburguesas, papas y pollo</label
+        >
+      </div>
+      <div class="food-item">
+        <img src="food/dog.jpeg" alt="hotdog" />
+        <label><input type="checkbox" name="food" value="hotdog" /> Hotdog</label>
+      </div>
+      <div class="food-item">
+        <img src="food/koreanfood.jpeg" alt="Korean food" />
+        <label
+          ><input type="checkbox" name="food" value="Korean food" /> Comida coreana</label
+        >
+      </div>
+      <div class="food-item">
+        <img src="food/pasta.jpeg" alt="pasta" />
+        <label><input type="checkbox" name="food" value="pasta" /> Pasta</label>
+      </div>
+      <div class="food-item">
+        <img src="food/pizza.jpeg" alt="pizza" />
+        <label><input type="checkbox" name="food" value="pizza" /> Pizza</label>
+      </div>
+      <div class="food-item">
+        <img src="food/salad.jpeg" alt="salad" />
+        <label><input type="checkbox" name="food" value="salad" /> Ensalada</label>
+      </div>
+      <div class="food-item">
+        <img src="food/steak.jpeg" alt="steak" />
+        <label><input type="checkbox" name="food" value="steak" /> Carne</label>
+      </div>
+      <div class="food-item">
+        <img src="food/sushi.jpeg" alt="sushi" />
+        <label><input type="checkbox" name="food" value="sushi" /> Sushi</label>
+      </div>
+    </div>
+    <button class="button" id="submitButton">Continua UWU</button>
+
+    <script>
+      document
+        .getElementById("submitButton")
+        .addEventListener("click", function () {
+          const selectedFoods = [];
+          const checkboxes = document.querySelectorAll('input[name="food"]:checked');
+
+          checkboxes.forEach((checkbox) => {
+            selectedFoods.push(checkbox.value);
+          });
+
+          if (selectedFoods.length === 0) {
+            alert("Por favor, selecciona al menos una opción.");
+            return;
+          }
+
+          // Enviar las selecciones al backend
+          fetch("http://localhost:8080/api/guardar-comida", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(selectedFoods),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Selecciones guardadas:", data);
+              alert("Selecciones guardadas correctamente");
+
+              // Redirigir a dessert.html
+              window.location.href = "dessert.html";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Error al guardar las selecciones");
+            });
+        });
+    </script>
+  </body>
+</html>

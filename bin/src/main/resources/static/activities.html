@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Actividades</title>
+    <link rel="stylesheet" href="css/activities.css" />
+  </head>
+  <body>
+    <div id="activityquestion"><b>Que hacemos despues</b></div>
+    <div class="activities-selection">
+      <div class="activity-item">
+        <img src="activities/aquarium.jpeg" alt="aquarium" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="aquarium"
+          />Acuario</label
+        >
+      </div>
+      <div class="activity-item">
+        <img src="activities/arcade.jpeg" alt="arcade" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="arcade"
+          />Arcade</label
+        >
+      </div>
+      <div class="activity-item">
+        <img src="activities/cinema.jpeg" alt="cinema" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="cinema"
+          />Cine</label
+        >
+      </div>
+     
+      <div class="activity-item">
+        <img src="activities/kunsthalle.jpeg" alt="kunsthalle" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="kunsthalle"
+          />Museo</label
+        >
+      </div>
+      <div class="activity-item">
+        <img src="activities/park.jpeg" alt="park.jpeg" />
+        <label
+          ><input
+            type="checkbox"
+            name="activities"
+            value="park.jpeg"
+          />Parque</label
+        >
+      </div>
+    </div>
+    <button class="button" onclick="location.href='lastpage.html'">
+      Siguiente
+    </button>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const button = document.querySelector(".button");
+      
+          button.addEventListener("click", async () => {
+            const selectedActivities = [];
+            document
+              .querySelectorAll("input[name='activities']:checked")
+              .forEach((checkbox) => {
+                selectedActivities.push({ nombre: checkbox.value });
+              });
+      
+            // Enviar los datos a Spring Boot
+            const response = await fetch("/api/guardar", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(selectedActivities),
+            });
+      
+            if (response.ok) {
+              alert("Actividades guardadas en la base de datos");
+            } else {
+              alert("Error al guardar");
+            }
+          });
+        });
+      </script>
+      
+  </body>
+</html>
